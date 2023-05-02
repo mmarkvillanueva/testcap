@@ -1,0 +1,83 @@
+{
+  "name": "testcap",
+  "version": "0.0.1",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "description": "Test CAP",
+  "engines": {
+    "node": "^16"
+  },
+  "dependencies": {
+    "@sap-cloud-sdk/http-client": "^2.5",
+    "@sap/audit-logging": "^5",
+    "@sap/cds": "^6.6",
+    "@sap/cds-odata-v2-adapter-proxy": "^1",
+    "@sap/xssec": "^3",
+    "debug": "^4.3",
+    "express": "^4",
+    "hdb": "^0.19",
+    "passport": "^0.4.1",
+    "sqlite3": "^5.1.6"
+  },
+  "scripts": {
+    "start": "cds run"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "es2020": true,
+      "node": true,
+      "jest": true,
+      "mocha": true
+    },
+    "globals": {
+      "SELECT": true,
+      "INSERT": true,
+      "UPDATE": true,
+      "DELETE": true,
+      "CREATE": true,
+      "DROP": true,
+      "CDL": true,
+      "CQL": true,
+      "CXL": true,
+      "cds": true
+    },
+    "rules": {
+      "no-console": "off",
+      "require-atomic-updates": "off"
+    }
+  },
+  "cds": {
+    "requires": {
+      "testcap-dest": {
+        "kind": "rest",
+        "credentials": {
+          "destination": "xsuaa-api"
+        }
+      },
+      "auth": {
+        "restrict_all_services": false
+      },
+      "db": {
+        "[production]": {
+          "kind": "hana-cloud",
+          "model": [
+            "db/data-config",
+            "db/data-test"
+          ]
+        },
+        "[development]": {
+          "kind": "sql",
+          "model": [
+            "db/data-config",
+            "db/data-test"
+          ]
+        },
+        "model": [
+          "db",
+          "srv"
+        ]
+      }
+    }
+  }
+}
